@@ -8,12 +8,13 @@ import ReadAssetPage from "./components/ReadAssetPage";
 import UpdateAssetPage from "./components/UpdateAssetPage";
 import DeleteAssetPage from "./components/DeleteAssetPage";
 import AssetListPage from "./components/AssetListPage";
+import AssetManagement from "./components/AssetManagement";
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-100">
-        <Navbar /> {/* Add Navbar here */}
+        <Navbar />
         <div className="container mx-auto p-4">
           <Routes>
             <Route path="/" element={<CreateAssetPage />} />
@@ -21,6 +22,7 @@ function App() {
             <Route path="/update-asset/:id" element={<UpdateAssetPage />} />
             <Route path="/delete-asset/:id" element={<DeleteAssetPage />} />
             <Route path="/assets" element={<AssetListPage />} />
+            <Route path="/assetmanagment" element={<AssetManagement />} />
           </Routes>
         </div>
       </div>

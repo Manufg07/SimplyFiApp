@@ -65,8 +65,8 @@ class clientApplication {
         resultBytes = await contract.evaluateTransaction(txnName, ...args);
       } else if (txnType === "update") {
         resultBytes = await contract.evaluateTransaction(txnName, ...args);
-      } else if (txnType === "delete") {
-        resultBytes = await contract.evaluateTransaction(txnName, ...args);
+      } else if (txnType === "invokeTxn" || txnType === "Delete") {
+        resultBytes = await contract.submitTransaction(txnName, ...args);
       } else {
         throw new Error(`Invalid transaction type: ${txnType}`);
       }
@@ -81,6 +81,7 @@ class clientApplication {
       client.close();
     }
   }
+  
 }
 
 async function newGrpcConnection(tlsCertPath, peerEndpoint, peerHostAlias) {

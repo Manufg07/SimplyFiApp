@@ -12,8 +12,8 @@ router.post("/assets", async (req, res) => {
       "org1", // Organization
       "admin", // Role
       "autochannel", // Channel
-      "KBA-Asset", // Chaincode Name
-      "AssetContract", // Contract Name
+      "KBA-Automobile", // Chaincode Name
+      "AssetTransfer", // Contract Name
       "invokeTxn", // Transaction Type
       "", // Transient Data
       "CreateAsset", // Function Name
@@ -43,8 +43,8 @@ router.get("/assets", async (req, res) => {
       "org1",
       "auditor",
       "autochannel",
-      "KBA-Asset",
-      "AssetContract",
+      "KBA-Automobile",
+      "AssetTransfer",
       "queryAuditor",
       "",
       "GetAllAssets"
@@ -74,8 +74,8 @@ router.get("/assets/:id", async (req, res) => {
       "org1",
       role,
       "autochannel",
-      "KBA-Asset",
-      "AssetContract",
+      "KBA-Automobile",
+      "AssetTransfer",
       "queryUser",
       "",
       "ReadAsset",
@@ -99,20 +99,21 @@ router.get("/assets/:id", async (req, res) => {
 router.put("/assets/:id", async (req, res) => {
   try {
     const { id: assetID } = req.params;
-    const { newValue } = req.body;
+    const { newValue, newOwner } = req.body;
 
     const client = new clientApplication();
     const result = await client.submitTxn(
       "org1",
       "admin",
       "autochannel",
-      "KBA-Asset",
-      "AssetContract",
-      "Update",
+      "KBA-Automobile",
+      "AssetTransfer",
+      "invokeTxn",
       "",
       "UpdateAsset",
       assetID,
-      newValue.toString()
+      newValue,
+      newOwner
     );
 
     const decoded = new TextDecoder().decode(result);
@@ -132,22 +133,37 @@ router.put("/assets/:id", async (req, res) => {
 router.delete("/assets/:id", async (req, res) => {
   try {
     const { id: assetID } = req.params;
+    console.log(`Deleting asset: ${assetID}`); // Log assetID
 
     const client = new clientApplication();
-    await client.submitTxn(
+    const result = await client.submitTxn(
       "org1",
       "admin",
       "autochannel",
-      "KBA-Asset",
-      "AssetContract",
+      "KBA-Automobile",
+      "AssetTransfer",
       "Delete",
       "",
       "DeleteAsset",
       assetID
     );
 
-    res.status(204).end();
-  } catch (error) {
+    const decoded = new TextDecoder().decode(result);
+
+let parsedResult;
+try {
+  parsedResult = JSON.parse(decoded);
+} catch (error) {
+  console.error("JSON Parse Error:", error.message, "Response:", decoded);
+  parsedResult = { message: decoded }; // Handle as plain text if JSON fails
+}
+
+res.status(200).json({
+  success: true,
+  message: parsedResult.message,
+});
+} catch (error) {
+    console.error("Delete Asset Error:", error); // Log full error
     res.status(500).json({
       success: false,
       error: error.message,

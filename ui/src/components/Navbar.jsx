@@ -25,17 +25,17 @@ const Navbar = () => {
             Asset List
           </Link>
           <Link
-            to="/update-asset/1" // Replace with a valid asset ID or dynamic route
+            to="/assetmanagment" // Replace with a valid asset ID or dynamic route
             className="text-white hover:text-blue-200 font-semibold"
           >
-            Update Asset
+            Asset Management
           </Link>
-          <Link
+          {/* <Link
             to="/delete-asset/1" // Replace with a valid asset ID or dynamic route
             className="text-white hover:text-blue-200 font-semibold"
           >
             Delete Asset
-          </Link>
+          </Link> */}
         </div>
       </div>
     </nav>

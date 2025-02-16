@@ -9,7 +9,7 @@ const ReadAssetPage = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`/assets/${assetID}`, {
+      const res = await fetch(`/api/assets/${assetID}`, {
         method: "GET",
       });
 
@@ -30,7 +30,7 @@ const ReadAssetPage = () => {
     <div className="bg-white flex items-center justify-center min-h-screen">
       <div className="bg-blue-100 p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 className="text-3xl font-bold text-blue-700 mb-6 text-center">
-          Read Asset
+          Read Asset User using AssetID
         </h2>
         <form onSubmit={submitForm}>
           <div className="mb-4">

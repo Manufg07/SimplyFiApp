@@ -16,7 +16,7 @@ const CreateAssetPage = () => {
     };
 
     try {
-      const res = await fetch("/assets", {
+      const res = await fetch("/api/assets", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
